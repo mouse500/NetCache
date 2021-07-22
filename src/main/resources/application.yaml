@@ -5,7 +5,7 @@ logging:
     com.sypark.simple: ERROR
 
 server:
-  port: 8080
+  port: 8088
   compression:
     enabled: true
     min-response-size: 1024
