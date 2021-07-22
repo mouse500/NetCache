@@ -26,9 +26,9 @@ public class NetCacheApplication {
 				.GET("/**", this::handlerGet)
 				.build();
 	}
-	ConcurrentHashMap<String,String> cache = new ConcurrentHashMap<>();
+	ConcurrentHashMap<String,byte[]> cache = new ConcurrentHashMap<>();
 	private Mono<ServerResponse> handlerPost(ServerRequest request) {
-		return request.bodyToMono(String.class).flatMap(val -> {
+		return request.bodyToMono(byte[].class).flatMap(val -> {
 			String key = request.uri().toASCIIString();
 			cache.put(key,val);
 			return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).bodyValue("OK");
@@ -37,8 +37,8 @@ public class NetCacheApplication {
 	private Mono<ServerResponse> handlerGet(ServerRequest request) {
 		String key = request.uri().toASCIIString();
 		if(cache.containsKey(key)) {
-			String val = cache.get(key);
-			return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).bodyValue(val);
+			byte[] val = cache.get(key);
+			return ServerResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).bodyValue(val);
 		}
 		else {
 			return ServerResponse.notFound().build();
