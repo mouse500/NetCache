@@ -39,7 +39,7 @@ public class NetCacheApplication {
 		String key = request.uri().toASCIIString();
 		if(cache.containsKey(key)) {
 			byte[] val = cache.get(key);
-			return ServerResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).bodyValue(val).delayElement(Duration.ofMillis((long)(Math.random()*100)));
+			return ServerResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).bodyValue(val).delayElement(Duration.ofMillis((long)(Math.random()*2000)));
 		}
 		else {
 			return ServerResponse.notFound().build();
