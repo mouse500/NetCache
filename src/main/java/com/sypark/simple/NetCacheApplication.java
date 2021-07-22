@@ -1,6 +1,7 @@
 package com.sypark.simple;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +26,7 @@ public class NetCacheApplication {
 				.GET("/**", this::handlerGet)
 				.build();
 	}
-	HashMap<String,String> cache = new HashMap<>();
+	ConcurrentHashMap<String,String> cache = new ConcurrentHashMap<>();
 	private Mono<ServerResponse> handlerPost(ServerRequest request) {
 		return request.bodyToMono(String.class).flatMap(val -> {
 			String key = request.uri().toASCIIString();
