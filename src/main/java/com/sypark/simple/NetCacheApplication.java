@@ -1,5 +1,6 @@
 package com.sypark.simple;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,7 +39,7 @@ public class NetCacheApplication {
 		String key = request.uri().toASCIIString();
 		if(cache.containsKey(key)) {
 			byte[] val = cache.get(key);
-			return ServerResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).bodyValue(val);
+			return ServerResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).bodyValue(val).delayElement(Duration.ofMillis((long)(Math.random()*100)));
 		}
 		else {
 			return ServerResponse.notFound().build();
